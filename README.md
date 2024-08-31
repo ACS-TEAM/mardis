@@ -18,7 +18,7 @@ python2 -m pip install uncompyle6==3.7.4
 ````
 now you can run with the command 
 ````bash
-$ python2 mardis.py
+python2 mardis.py
 Usage: mardis [filename|output]
 
 filename = the file you want to decompile
