@@ -1,11 +1,135 @@
-#--------------------------------------------------
-#--------HEY BRO WASSUP--------
-#--------------------------------------------------
-#Encoder : TEAM_ACS
-#Facebook : Termux Learning Zone of TEAM ACS
-#GitHub :  ACS-TEAM
-#Telegram : Anonymouse Cyber shield - BD
-#--------------------------------------------------
+# Repo: https://github.com/kapten-kaizo/mardis
+# Author: @Kang_Ehem
+# Update at: 22 Jun 2024 18.42
 
+import sys, re
+from StringIO import StringIO
+from uncompyle6.main import decompile
 
-_ = lambda __ : __import__('marshal').loads(__import__('zlib').decompress(__import__('base64').b64decode(__[::-1])));exec((_)(b'==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'))
+script_name = 'mardis'
+version = "3.0"
+mardis_error_decompile = "#mardis execution encountered an error!!!"
+
+def try_decompile(code_obj):
+	if isco(code_obj) == False:
+		return code_obj
+	paper = StringIO()
+	try:
+		decompile(None, code_obj, paper)
+		return paper.getvalue()
+	except Exception as err:
+		return mardis_error_decompile
+
+def save_code(file, string):
+	open(file, "w").write(
+		string
+	)
+
+def _parse(source):
+	regex = re.findall("exec(.*)", source)
+	amount = len(regex)
+	if amount == 0:
+		return 4, 0, 4
+	_backup = source
+	default = {}
+	listv = []
+	for i, value in enumerate(regex):
+		listv.append("try:\n\tmardis_execute_list.append(mardis_execute%d)\nexcept Exception:\n\terr += 1" % (i))
+		key = "exec" + value
+		replace = "mardis_execute%d=%s" % (i, value)
+		source = source.replace(key, replace)
+	source += "\nerr = 0\nmardis_execute_list = []\n%s" % "\n".join(listv)
+	exec(source)
+	return mardis_execute_list
+
+def isco(co):
+	return hasattr(co, 'co_code')
+
+def fn(x, iter=0):
+	if x[-3:] == ".py":
+		x = x[:-3]
+	y = [x + ".py"]
+	if iter:
+		for i in range(1, iter):
+			v = x + str(i) + ".py"
+			y.append(v)
+	return y
+
+def view(xxx):
+	try:
+		return open(xxx).read()
+	except Exception:
+		print("file %s not found!" % xxx)
+		exit()
+
+def dis(filename, outfile):
+	source_code = view(filename)
+	layer = 0
+	while True:
+		if source_code.count("exec") != 0:
+			try:
+				codelist = _parse(source_code)
+			except Exception:
+				print('\n We got an unexpected error here, please check the `%s` file to find the cause of the error.' % outfile)
+				save_code(
+					outfile,
+					source_code
+				)
+				break
+			amount = len(codelist)
+			suck = []
+			err = 0
+			if amount > 1:
+				print('mardis layer%d:\n- get %s target to decompile. trying ...' % (layer, amount))
+			else:
+				xxx = codelist[0]
+				if isco(xxx):
+					print('mardis layer%d: try target %s' % (layer, str(codelist[0])))
+				else:
+					print('mardis layer%d: target is not a code type' % layer)
+			for code_obj in codelist:
+				execute = try_decompile(code_obj)
+				if execute == mardis_error_decompile:
+					err += 1
+				else:
+					suck.append(execute)
+			amount = len(suck)
+			if amount > 1:
+				print('- total %d successfully decompiled' % len(suck))
+				xyz = fn(outfile, iter=amount)
+				for file, source in zip(xyz, suck):
+					save_code(file, source)
+				print('\ndecompilation results are saved to the following file\n- %s' % ('\n- '.join(xyz)))
+				break
+			else:
+				if err > 0:
+					print('\nthe decompilation process fails at this phase.')
+					print('check the %s file to analyze errors' % outfile)
+					save_code(outfile, source_code)
+					break
+				else:
+					source_code = suck[0]
+		else:
+			if layer > 0:
+				print('\nDecompilation was successful, with a total of %d layer. Results were saved to file `%s`' % (layer, outfile))
+				save_code(outfile, source_code)
+				break
+			else:
+				print('did not find code to decompile in file `%s`' % filename)
+				break
+		layer += 1
+
+def main():
+	outfile = "mardis_result.py"
+	if len(sys.argv) < 2:
+		print("Usage: %s [filename|output]" % script_name)
+		print("\nfilename = the file you want to decompile ")
+		print("output = For files that store decompilation results, the default is `%s`" % outfile)
+		exit()
+	else:
+		if len(sys.argv) >= 3:
+			outfile = sys.argv[2]
+		dis(sys.argv[1], outfile)
+
+if __name__ == "__main__":
+	main()
