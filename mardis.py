@@ -1,4 +1,4 @@
-# Repo: https://github.com/kapten-kaizo/mardis
+# Repo: https://github.com/ACS-TEAM/mardis
 # Author: @Kang_Ehem
 # Update at: 22 Jun 2024 18.42
 
